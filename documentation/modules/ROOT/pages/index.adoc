@@ -6,23 +6,27 @@
 
 A brief introduction of this solution pattern.
 
-_Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum_
+_In today’s data-sensitive landscape, companies often need to run AI models within secure, private environments while still providing external access to their services. This challenge can be met by combining Red Hat Service Interconnect (RHSI) with OpenShift and InstructLab to enable secure, seamless communication between isolated AI models and public-facing applications._
 
-*Contributors:* _Your Name(s) here (can add links to your profile)_
+_In this pattern, a local AI chatbot is trained and served via InstructLab in a protected environment where the model remains shielded from external access. Using Red Hat Service Interconnect, the model is exposed as a service within a public OpenShift environment, ensuring that sensitive data stays private while maintaining the flexibility to serve external requests. This approach simplifies managing secure hybrid environments and demonstrates how companies can safely deploy and operate AI services without compromising on security or accessibility._
+
+*Contributors:* Rafael Zago
 
 ++++
  <br>
 ++++
 [NOTE]
 ====
-Solutions Patterns help you understand the art of the possible with Red Hat's portfolio, and not intended to be used as is for production environments. You are welcome use any part of this solution pattern for your own workloads.
+This architecture leverages Red Hat Service Interconnect to ensure secure communication between isolated environments and public-facing services, while InstructLab is used to serve AI models from a protected environment. This combination offers a robust solution for organizations needing to balance data security with the flexibility of public access.
 ====
 [#use-cases]
 == Use cases
 
 Common use cases that can be address with this architecture are:
 
-- xyz
-- xyz
+- **Secure AI Model Hosting**: Safely hosting and serving AI models within a private environment while exposing services for public interaction.
+- **Hybrid Cloud Deployments**: Integrating private and public cloud environments for seamless communication without compromising data privacy.
+- **AI-Powered Business Applications**: Deploying AI chatbots or other ML-driven services that need to interact with customers while keeping the underlying data and models secure.
+- **Federated AI Training**: Collaborating on AI model training across multiple secure environments, allowing data to stay localized while models are exposed via a unified interface.
 
 include::01-pattern.adoc[]
