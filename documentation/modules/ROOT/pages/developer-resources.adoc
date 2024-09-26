@@ -6,6 +6,9 @@
 
 = Developer Resources
 
-* Add link to the git repo of the code
-* Add links to whitepapers, ebooks, learning paths, product pages
-
+* InstructLab - https://instructlab.io[InstructLab]  
+* Red Hat Developer - https://developers.redhat.com[Red Hat Developer]  
+* Red Hat Service Interconnect - https://access.redhat.com/products/red-hat-service-interconnect[Red Hat Service Interconnect]  
+* Skupper - https://skupper.io[Skupper]  
+* Blog post from https://developers.redhat.com/author/cedric-clyburn[Cedric Clyburn]: https://developers.redhat.com/blog/2021/09/30/getting-started-with-instructlab-for-generative-ai-models[Getting started with InstructLab for generative AI model]  
+* Add links to whitepapers, ebooks, learning paths, product pages  

@@ -7,7 +7,11 @@
 
 == Demonstration
 
-Include here content related to potential existing demos: blogs, articles, recorded videos, walkthrough guides, tutorials.
+References:
+
+* https://github.com/instructlab[Commands extract from the InstructLab project]
+* https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab[Getting started with InstructLab: Generative AI model tuning]
+* https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab[InstructLab installation guide]
 
 [#demo-video]
 === Watch a demonstration
@@ -20,15 +24,216 @@ Next, you can learn how to walkthrough this demo.
 
 == Run the demonstration
 
-=== Before getting started
-To run this demo, you will need xpto. Adding to that, make sure to have:
+=== AI Model Deployment with InstructLab
 
-* ABC
-* XYZ
-* XPTO
+The first step is to deploy the InstructLab chat model in the InstructLab site. The InstructLab chat model will be responsible for receiving the user input and sending it to the LLaMA3 model. The response from the LLaMA3 model will be sent back to the user. This is based on the article: https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab[Getting Started with InstructLab for Generative AI Model Tuning].
 
-=== Installing the demo
-Installation guide and basic test of the demo installation if needed
+[.console-input]
+[source,shell script]
+----
+mkdir instructlab && cd instructlab
+python3.11 -m venv venv
+source venv/bin/activate
+pip install 'instructlab[cuda]' -C cmake.args="-DLLAMA_CUDA=on" -C cmake.args="-DLLAMA_NATIVE=off"
+----
 
-=== Walkthrough guide
-How to run through the demo
+[IMPORTANT]
+====
+This installation method will enable your Nvidia GPU to be used by InstructLab. If you don't have an Nvidia GPU, please check other options in: https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab[InstructLab Installation Guide].
+====
+
+[.console-input]
+[source,shell script]
+----
+ilab config init
+----
+
+To enable external access to your model, please modify the `config.yaml` file:
+
+[source,yaml]
+----
+chat:
+  context: default
+  greedy_mode: false
+  logs_dir: data/chatlogs
+  max_tokens: null
+  model: models/merlinite-7b-lab-Q4_K_M.gguf
+  session: null
+  vi_mode: false
+  visible_overflow: true
+general:
+  log_level: INFO
+generate:
+  chunk_word_count: 1000
+  model: models/merlinite-7b-lab-Q4_K_M.gguf
+  num_cpus: 10
+  num_instructions: 100
+  output_dir: generated
+  prompt_file: prompt.txt
+  seed_file: seed_tasks.json
+  taxonomy_base: origin/main
+  taxonomy_path: taxonomy
+serve:
+  gpu_layers: -1
+  host_port: 0.0.0.0:8000
+  max_ctx_size: 4096
+  model_path: models/merlinite-7b-lab-Q4_K_M.gguf
+----
+
+Now, you can download and start your server:
+
+[.console-input]
+[source,shell script]
+----
+ilab model download
+ilab model serve
+
+# The output should be similar to:
+INFO 2024-07-30 18:59:01,199 serve.py:51: serve Using model 'models/merlinite-7b-lab-Q4_K_M.gguf' with -1 gpu-layers and 4096 max context size.
+INFO 2024-07-30 18:59:01,611 server.py:218: server Starting server process, press CTRL+C to shutdown server...
+INFO 2024-07-30 18:59:01,612 server.py:219: server After application startup complete see http://0.0.0.0:8000/docs for API.
+----
+
+== Private Skupper Deployment
+
+The second step is to deploy the private Skupper in Site A. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the LLaMA3 model and receive the response from the merlinite model. Open a new terminal and run the following commands:
+
+=== Install Skupper
+
+[.console-input]
+[source,shell script]
+----
+export SKUPPER_PLATFORM=podman
+skupper init --ingress none
+----
+
+=== Exposing the InstructLab Chat Model
+
+To bind the local service running the InstructLab chat model to the Skupper service:
+
+[.console-input]
+[source,shell script]
+----
+skupper expose host host.containers.internal --address instructlab --port 8000
+----
+
+Check the status of the Skupper service:
+
+[.console-input]
+[source,shell script]
+----
+skupper service status
+
+Services exposed through Skupper:
+╰─ instructlab:8000 (tcp)
+----
+
+== Public Skupper Deployment
+
+Deploy the public Skupper in Site B. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.
+
+=== Creating the project and deploying the public Skupper:
+
+[.console-input]
+[source,shell script]
+----
+oc new-project ollama-pilot
+skupper init --enable-console --enable-flow-collector --console-user admin --console-password admin
+----
+
+=== Creating the token to allow the private Skupper to connect to the public Skupper:
+
+[.console-input]
+[source,shell script]
+----
+skupper token create token.yaml
+----
+
+Now, you'll have a `token.yaml` file with the token to connect the two sites.
+
+=== Secure Communication Between the Two Sites with Skupper
+
+In the terminal where the private Skupper is running, link the two sites:
+
+[.console-input]
+[source,shell script]
+----
+skupper link create token.yaml --name instructlab
+----
+
+Check the status of the Skupper link:
+
+[.console-input]
+[source,shell script]
+----
+skupper link status
+
+Links created from this site:
+
+        Link instructlab is connected
+
+Current links from other sites that are connected:
+
+        There are no connected links
+----
+
+Check the status on the public Skupper terminal:
+
+[.console-input]
+[source,shell script]
+----
+skupper link status
+
+Links created from this site:
+
+       There are no links configured or connected
+
+Current links from other sites that are connected:
+
+       Incoming link from site b8ad86d5-9680-4fea-9c07-ea7ee394e0bd
+----
+
+=== Chatbot with Protected Data
+
+The last step is to expose the service in the public Skupper and create the Ollama Pilot application.
+
+* Still on the terminal where the public Skupper is running, run the following command to expose the service:
+
+[.console-input]
+[source,shell script]
+----
+skupper service create instructlab 8000
+----
+* Exposing the service to the internet:
+
+[.console-input]
+[source,shell script]
+----
+oc expose service instructlab
+----
+
+* Getting the public URL:
+
+[.console-input]
+[source,shell script]
+----
+oc get route instructlab
+
+NAME          HOST/PORT                                                              PATH   SERVICES      PORT       TERMINATION   WILDCARD
+instructlab   instructlab-ollama-pilot.apps.your-cluster-url          instructlab   port8000                 None
+----
+
+* The last step is to create the Ollama Pilot application. You can repeat the instructions from step 1 for AI model deployment in Site B, except you will not run `ilab model serve` since it’s already running in Site A.
+
+=== Finally, to interact with the chatbot:
+
+[.console-input]
+[source,shell script]
+----
+ilab model chat --endpoint-url http://instructlab-ollama-pilot.apps.your-cluster-url/v1/
+
+╭─────────────────────────────────────────────── system ────────────────────────────────────────────────
+│ Welcome to InstructLab Chat w/ MODELS/MERLINITE-7B-LAB-Q4_K_M.GGUF (type /h for help)
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────
+>>>                     [S][default]
+
