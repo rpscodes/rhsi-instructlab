@@ -13,15 +13,6 @@ References:
 * https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab[Getting started with InstructLab: Generative AI model tuning]
 * https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab[InstructLab installation guide]
 
-[#demo-video]
-=== Watch a demonstration
-
-In this video you can see xpto:
-
-video::3yULVMdqJ98[youtube, width=800, height=480]
-
-Next, you can learn how to walkthrough this demo.
-
 == Run the demonstration
 
 === AI Model Deployment with InstructLab
