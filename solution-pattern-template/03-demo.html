@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Solution Pattern: Name Template :: Solution Patterns for Cloud Native Architectures</title>
+    <link rel="canonical" href="https://redhat-solution-patterns.github.io/solution-patterns/solution-pattern-template/03-demo.html">
+    <link rel="prev" href="02-architecture.html">
+    <link rel="next" href="04-conclusion.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" style="font-size: 20px; color: white"
+        href="https://redhat-solution-patterns.github.io/solution-patterns">
+        <img src="../_/img/logo.png" height="35px" alt="Solution Patterns">&nbsp; Solution Patterns for Cloud Native Architectures</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Architectures &amp; Patterns</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://www.redhat.com/architect/portfolio/" target="_blank">Portfolio Architecture&nbsp; </a>
+            <a class="navbar-item" href="https://redhat-solution-patterns.github.io/solution-patterns/patterns.html"  target="_blank">Solution Patterns </a>
+            <a class="navbar-item" href="https://validatedpatterns.io/" target="_blank">Validated Patterns&nbsp;</a>
+            <a class="navbar-item" href="https://catalog.redhat.com/solutions" target="_blank">Ecosystem Solutions&nbsp;</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" target="_blank" href="https://developers.redhat.com">Red Hat Developers</a>
+            <a class="navbar-item" target="_blank" href="https://developers.redhat.com/app-dev-platform">App Dev Platform</a>
+            <a class="navbar-item" target="_blank" href="https://www.redhat.com/en/products/application-foundations">Red Hat Application Services</a>
+          </div>
+        </div>
+
+          <a class="navbar-item" target="_blank" href="https://github.com/redhat-solution-patterns/redhat-solution-patterns.github.io/issues">Feedback</a>
+          <a class="navbar-item" target="_blank" href="https://redhat-solution-patterns.github.io/solution-patterns/contributors-guide.html">Contribute</a>
+
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="solution-pattern-template" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Template Tutorial</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">1. Home page</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index.html#use-cases">1.1 Use cases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index.html#_the_story_behind_this_solution_pattern">1.2 The story behind this solution pattern</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index.html#_the_solution">1.3 The solution</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-architecture.html">2. Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-architecture.html#tech_stack">2.1. Technology stack</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-architecture.html#in_depth">2.2. An in-depth look at the solution&#8217;s architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-architecture.html#more_tech">2.3. More about the technology stack</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-demo.html">3. See the Solution in Action</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#_demonstration">3.1. Demonstration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#_run_the_demonstration">3.2. Run this demonstration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#_before_getting_started">3.3. Pre-requisites</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#_installing_the_demo">3.4. Installing the demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#_walkthrough_guide">3.5. Walkthrough guide</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="04-conclusion.html">4. Conclusion</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="developer-resources.html">5. Developer Resources</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text"><a href="https://redhat-solution-patterns.github.io/solution-patterns/patterns.html" target="_blank" rel="noopener">Explore Red Hat Solution Patterns</a></span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Template Tutorial</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Template Tutorial</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Template Tutorial</a></li>
+    <li><a href="03-demo.html">3. See the Solution in Action</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/rafaelvzago/rhsi-instructlab/edit/main/documentation/modules/ROOT/pages/03-demo.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Solution Pattern: Name Template</h1>
+<h1 id="_see_the_solution_in_action" class="sect0"><a class="anchor" href="#_see_the_solution_in_action"></a><a class="link" href="#_see_the_solution_in_action">See the Solution in Action</a></h1>
+<div class="sect1">
+<h2 id="_demonstration"><a class="anchor" href="#_demonstration"></a><a class="link" href="#_demonstration">1. Demonstration</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>References:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/instructlab">Commands extract from the InstructLab project</a></p>
+</li>
+<li>
+<p><a href="https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab">Getting started with InstructLab: Generative AI model tuning</a></p>
+</li>
+<li>
+<p><a href="https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab">InstructLab installation guide</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts_and_commands_used_in_the_demonstration"><a class="anchor" href="#_concepts_and_commands_used_in_the_demonstration"></a><a class="link" href="#_concepts_and_commands_used_in_the_demonstration">2. Concepts and Commands Used in the Demonstration</a></h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Please make sure to explain what each Skupper command does the first time you use it, especially for people unfamiliar with Skupper. The following commands should be explained:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>skupper init</code></strong>: Initializes the Skupper network, setting up the necessary components to enable secure communication between services.</p>
+</li>
+<li>
+<p><strong><code>skupper expose</code></strong>: Exposes a local service through the Skupper network, allowing it to be accessed from other Skupper-connected sites.</p>
+</li>
+<li>
+<p><strong><code>skupper token</code></strong>: Generates a connection token that can be used by other sites to link to the Skupper network, ensuring secure communication.</p>
+</li>
+<li>
+<p><strong><code>skupper link</code></strong>: Establishes a secure link between two Skupper sites using the token created by <code>skupper token</code>.</p>
+</li>
+<li>
+<p><strong><code>skupper service status</code></strong>: Displays the status of services exposed through Skupper, showing what is accessible and how it’s connected within the network.</p>
+</li>
+<li>
+<p><strong><code>ilab download</code></strong>: Downloads the model to be used by the chatbot.</p>
+</li>
+<li>
+<p><strong><code>ilab model serve</code></strong>: Starts the server that will be responsible for receiving the user input, sending it to the LLaMA3 model, and sending the response back to the user.</p>
+</li>
+<li>
+<p><strong><code>ilab model chat</code></strong>: Starts the chatbot, allowing the user to interact with it.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_run_the_demonstration"><a class="anchor" href="#_run_the_demonstration"></a><a class="link" href="#_run_the_demonstration">3. Run the demonstration</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ai_model_deployment_with_instructlab"><a class="anchor" href="#_ai_model_deployment_with_instructlab"></a><a class="link" href="#_ai_model_deployment_with_instructlab">3.1. AI Model Deployment with InstructLab</a></h3>
+<div class="paragraph">
+<p>The first step is to deploy the InstructLab chat model in the InstructLab site. The InstructLab chat model will be responsible for receiving the user input and sending it to the LLaMA3 model. The response from the LLaMA3 model will be sent back to the user. This is based on the article: <a href="https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab">Getting Started with InstructLab for Generative AI Model Tuning</a>.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">mkdir instructlab &amp;&amp; cd instructlab
+python3.11 -m venv venv
+source venv/bin/activate
+pip install 'instructlab[cuda]' -C cmake.args="-DLLAMA_CUDA=on" -C cmake.args="-DLLAMA_NATIVE=off"</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This installation method will enable your Nvidia GPU to be used by InstructLab. If you don&#8217;t have an Nvidia GPU, please check other options in: <a href="https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab">InstructLab Installation Guide</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_initialize_the_instructlab_configuration"><a class="anchor" href="#_initialize_the_instructlab_configuration"></a><a class="link" href="#_initialize_the_instructlab_configuration">3.2. Initialize the InstructLab Configuration</a></h3>
+<div class="paragraph">
+<p>After installing InstructLab, you need to initialize the configuration. This is the step where you create the <code>config.yaml</code> file, at <code>~/instructlab/config.yaml</code>, with the default configuration. To initialize the configuration, run the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">ilab config init</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To enable external access to your model, please modify the <code>config.yaml</code> file, located into your <code>instructlab</code> directory ie. <code>~/instructlab/config.yaml</code>, with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">chat:
+  context: default
+  greedy_mode: false
+  logs_dir: data/chatlogs
+  max_tokens: null
+  model: models/merlinite-7b-lab-Q4_K_M.gguf
+  session: null
+  vi_mode: false
+  visible_overflow: true
+general:
+  log_level: INFO
+generate:
+  chunk_word_count: 1000
+  model: models/merlinite-7b-lab-Q4_K_M.gguf
+  num_cpus: 10
+  num_instructions: 100
+  output_dir: generated
+  prompt_file: prompt.txt
+  seed_file: seed_tasks.json
+  taxonomy_base: origin/main
+  taxonomy_path: taxonomy
+serve:
+  gpu_layers: -1
+  host_port: 0.0.0.0:8000
+  max_ctx_size: 4096
+  model_path: models/merlinite-7b-lab-Q4_K_M.gguf</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_download_the_model"><a class="anchor" href="#_download_the_model"></a><a class="link" href="#_download_the_model">3.3. Download the model</a></h3>
+<div class="paragraph">
+<p>Now you need to download the model, this is the step where you download the model to be used by the chatbot. The model is the LLaMA3 model, which is a large language model trained on the Merlinite dataset. The model is responsible for generating the responses to the user input. To download the model, run the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">ilab model download</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_start_the_server"><a class="anchor" href="#_start_the_server"></a><a class="link" href="#_start_the_server">3.4. Start the server</a></h3>
+<div class="paragraph">
+<p>The last step is to start the server. The server will be responsible for receiving the user input, sending it to the LLaMA3 model, and sending the response back to the user.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">ilab model serve
+
+# The output should be similar to:
+INFO 2024-07-30 18:59:01,199 serve.py:51: serve Using model 'models/merlinite-7b-lab-Q4_K_M.gguf' with -1 gpu-layers and 4096 max context size.
+INFO 2024-07-30 18:59:01,611 server.py:218: server Starting server process, press CTRL+C to shutdown server...
+INFO 2024-07-30 18:59:01,612 server.py:219: server After application startup complete see http://0.0.0.0:8000/docs for API.</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_private_skupper_deployment"><a class="anchor" href="#_private_skupper_deployment"></a><a class="link" href="#_private_skupper_deployment">4. Private Skupper Deployment</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The second step is to deploy the private Skupper in Site A. The private Skupper will be responsible for creating a secure connection between the two sites, allowing the Ollama Pilot application to send requests to the LLaMA3 model and receive the response from the merlinite model. Open a new terminal and run the following commands:</p>
+</div>
+<div class="sect2">
+<h3 id="_install_skupper"><a class="anchor" href="#_install_skupper"></a><a class="link" href="#_install_skupper">4.1. Install Skupper</a></h3>
+<div class="paragraph">
+<p>To install skupper on site A, with podman as the platform:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">export SKUPPER_PLATFORM=podman
+skupper init --ingress none</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>SKUPPER_PLATFORM=podman</code> is used to set the platform to podman. This is necessary because the private Skupper will be running on a podman container.</p>
+</li>
+<li>
+<p><code>skupper init</code> is used to initialize the Skupper network, setting up the necessary components to enable secure communication between services.</p>
+</li>
+<li>
+<p>The <code>--ingress none</code> flag is used to disable the automatic creation of an ingress controller. This is necessary because the public Skupper will be responsible for exposing the service to the internet.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exposing_the_instructlab_chat_model"><a class="anchor" href="#_exposing_the_instructlab_chat_model"></a><a class="link" href="#_exposing_the_instructlab_chat_model">4.2. Exposing the InstructLab Chat Model</a></h3>
+<div class="paragraph">
+<p>To bind the local service running the InstructLab chat model to the Skupper service:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper expose host host.containers.internal --address instructlab --port 8000</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>skupper expose</code> is used to expose a local service through the Skupper network, allowing it to be accessed from other Skupper-connected sites.</p>
+</li>
+<li>
+<p><code>host.containers.internal</code> is used to bind the local service to the Skupper service.</p>
+</li>
+<li>
+<p><code>--address instructlab</code> is used to specify the address of the service.</p>
+</li>
+<li>
+<p><code>--port 8000</code> is used to specify the port of the service.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Check the status of the Skupper service:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper service status
+
+Services exposed through Skupper:
+╰─ instructlab:8000 (tcp)</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>skupper service status</code> is used to display the status of services exposed through Skupper, showing what is accessible and how it’s connected within the network.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_public_skupper_deployment"><a class="anchor" href="#_public_skupper_deployment"></a><a class="link" href="#_public_skupper_deployment">5. Public Skupper Deployment</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Deploy the public Skupper in Site B. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.</p>
+</div>
+<div class="sect2">
+<h3 id="_creating_the_project_and_deploying_the_public_skupper"><a class="anchor" href="#_creating_the_project_and_deploying_the_public_skupper"></a><a class="link" href="#_creating_the_project_and_deploying_the_public_skupper">5.1. Creating the project and deploying the public Skupper:</a></h3>
+<div class="paragraph">
+<p>This is the step where you create the project and deploy the public Skupper. The public Skupper will be responsible for receiving the connection from the private Skupper and creating a secure connection between the two sites. Open a new terminal and run the following commands:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">export SKUPPER_PLATFORM=kubernetes
+oc new-project ollama-pilot
+skupper init --enable-console --enable-flow-collector --console-user admin --console-password admin</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Run this command in a new terminal and keep it open, because the default platform is <code>kubernetes</code> and the private terminal is using <code>podman</code>.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>SKUPPER_PLATFORM=kubernetes</code> is used to set the platform to Kubernetes. This is necessary because the public Skupper will be running on a Kubernetes cluster.</p>
+</li>
+<li>
+<p><code>oc new-project ollama-pilot</code> is used to create a new project called <code>ollama-pilot</code>.</p>
+</li>
+<li>
+<p><code>skupper init</code> is used to initialize the Skupper network, setting up the necessary components to enable secure communication between services.</p>
+</li>
+<li>
+<p>The <code>--enable-console</code> flag is used to enable the Skupper console, which provides a web interface for managing the Skupper network.</p>
+</li>
+<li>
+<p>The <code>--enable-flow-collector</code> flag is used to enable the flow collector, which collects and displays information about the traffic flowing through the Skupper network.</p>
+</li>
+<li>
+<p>The <code>--console-user admin</code> flag is used to set the username for the Skupper console to <code>admin</code>.</p>
+</li>
+<li>
+<p>The <code>--console-password admin</code> flag is used to set the password for the Skupper console to <code>admin</code>.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_the_token_to_allow_the_private_skupper_to_connect_to_the_public_skupper"><a class="anchor" href="#_creating_the_token_to_allow_the_private_skupper_to_connect_to_the_public_skupper"></a><a class="link" href="#_creating_the_token_to_allow_the_private_skupper_to_connect_to_the_public_skupper">5.2. Creating the token to allow the private Skupper to connect to the public Skupper:</a></h3>
+<div class="paragraph">
+<p>This is the step where you create the token to allow the private Skupper to connect to the public Skupper. Open a new terminal and run the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper token create token.yaml</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>skupper token create token.yaml</code> is used to generate a connection token that can be used by other sites to link to the Skupper network, ensuring secure communication.</p>
+</li>
+<li>
+<p>The <code>token.yaml</code> file will contain the token to connect the two sites.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now, you&#8217;ll have a <code>token.yaml</code> file with the token to connect the two sites.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_secure_communication_between_the_two_sites_with_skupper"><a class="anchor" href="#_secure_communication_between_the_two_sites_with_skupper"></a><a class="link" href="#_secure_communication_between_the_two_sites_with_skupper">5.3. Secure Communication Between the Two Sites with Skupper</a></h3>
+<div class="paragraph">
+<p>Now it&#8217;s time to establish a secure connection between the two sites using the token created by the public Skupper. At the terminal where the private Skupper is running, run the following command to link the two sites:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper link create token.yaml --name instructlab</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>skupper link create token.yaml --name instructlab</code> is used to establish a secure link between two Skupper sites using the token created by <code>skupper token</code>.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Check the status of the Skupper link:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper link status
+
+Links created from this site:
+
+        Link instructlab is connected
+
+Current links from other sites that are connected:
+
+        There are no connected links</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>skupper link status</code> is used to display the status of the links created by the Skupper network, showing which sites are connected and how they are connected.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Check the status on the public Skupper terminal:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper link status
+
+Links created from this site:
+
+       There are no links configured or connected
+
+Current links from other sites that are connected:
+
+       Incoming link from site b8ad86d5-9680-4fea-9c07-ea7ee394e0bd</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>skupper link status</code> is used to display the status of the links created by the Skupper network, showing which sites are connected and how they are connected.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_chatbot_with_protected_data"><a class="anchor" href="#_chatbot_with_protected_data"></a><a class="link" href="#_chatbot_with_protected_data">5.4. Chatbot with Protected Data</a></h3>
+<div class="paragraph">
+<p>The last step is to expose the service in the public Skupper and create the Ollama Pilot application.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Still on the terminal where the public Skupper is running, run the following command to expose the service:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">skupper service create instructlab 8000</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Exposing the service to the internet:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc expose service instructlab</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>skupper service create instructlab 8000</code> is used to create a service in the public Skupper, allowing it to be accessed from the private Skupper.</p>
+</li>
+<li>
+<p><code>oc expose service instructlab</code> is used to expose the service to the internet, allowing it to be accessed by the Ollama Pilot application.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Getting the public URL:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This URL will be used to access the chatbot from the Ollama Pilot application.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">oc get route instructlab
+NAME          HOST/PORT                                      PATH          SERVICES                PORT       TERMINATION   WILDCARD
+instructlab   instructlab-ollama-pilot.apps.your-cluster-url instructlab                           port8000   None</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>oc get route instructlab</code> is used to get the public URL of the service, which will be used to access the chatbot from the Ollama Pilot application.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_finally_to_interact_with_the_chatbot"><a class="anchor" href="#_finally_to_interact_with_the_chatbot"></a><a class="link" href="#_finally_to_interact_with_the_chatbot">6. Finally, to interact with the chatbot</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s interact with the chatbot. Run the following command to start the chatbot:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell script hljs" data-lang="shell script">ilab model chat --endpoint-url http://instructlab-ollama-pilot.apps.your-cluster-url/v1/
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── system ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Welcome to InstructLab Chat w/ MODELS/MERLINITE-7B-LAB-Q4_K_M.GGUF (type /h for help)                                                                                                                                                                                                                                      │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+&gt;&gt;&gt; Hello, who are you?                                                                                                                                                                                                                                                                                           [S][default]
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── models/merlinite-7b-lab-Q4_K_M.gguf ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ I am an AI Language Model from IBM Research, trained to assist with various tasks such as answering questions, translating text, summarizing long documents, and even explaining complex concepts. I am here to help make your life easier!                                                                                │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── elapsed 14.291 seconds ─╯
+&gt;&gt;&gt; What is Red Hat Service Interconnect                                                                                                                                                                                                                                                                          [S][default]
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── models/merlinite-7b-lab-Q4_K_M.gguf ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Red Hat Service Interconnect (RHSI) is a software-defined networking solution that allows organizations to create secure, high-performance networks between their on-premises environments and various cloud resources. It enables seamless communication between different data centers, public clouds (such as Amazon    │
+│ Web Services or Microsoft Azure), and even edge devices (such as IoT gateways or mobile applications). RHSI offers the following key features:                                                                                                                                                                             │
+│                                                                                                                                                                                                                                                                                                                            │
+│ 1. **Security**: RHSI ensures secure communication between different environments by employing advanced encryption algorithms like IPSEC and TLS. It also supports virtual private cloud (VPC) concepts for creating isolated networking environments within public clouds.                                                │
+│ 2. **Performance**: RHSI provides high-bandwidth, low-latency network connections. This makes it suitable for handling large data transfers or real-time applications like video streaming and gaming.                                                                                                                     │
+│ 3. **Flexibility**: RHSI supports a wide range of networking protocols such as IPv4, IPv6, and even overlay networks (such as OpenFlow). This allows organizations to build complex networking topologies that cater to their specific needs.                                                                              │
+│ 4. **Automation**: RHSI offers programmable network interfaces, enabling automated provisioning and management of networking resources. This reduces the administrative overhead and improves operational efficiency.                                                                                                      │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── elapsed 94.969 seconds ─╯
+&gt;&gt;&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>ilab model chat --endpoint-url <a href="http://instructlab-ollama-pilot.apps.your-cluster-url/v1/" class="bare">http://instructlab-ollama-pilot.apps.your-cluster-url/v1/</a></code> is used to start the chatbot, allowing the user to interact with it.</p>
+</li>
+<li>
+<p>The chatbot will respond to the user input by sending it to the LLaMA3 model and returning the response back to the user.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="02-architecture.html" class="query-params-link">2. Architecture</a></span>
+  <span class="next"><a href="04-conclusion.html" class="query-params-link">4. Conclusion</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img
+          src="../_/img/app-services-logo.png" height="40px" alt="Cloud Native Architecture Solution Patterns"  href="https://redhat.com" ></a>
+</footer><script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

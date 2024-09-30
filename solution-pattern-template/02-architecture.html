@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Solution Pattern: Secure AI Chatbot Deployment Using InstructLab and Skupper :: Solution Patterns for Cloud Native Architectures</title>
+    <link rel="canonical" href="https://redhat-solution-patterns.github.io/solution-patterns/solution-pattern-template/02-architecture.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="03-demo.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" style="font-size: 20px; color: white"
+        href="https://redhat-solution-patterns.github.io/solution-patterns">
+        <img src="../_/img/logo.png" height="35px" alt="Solution Patterns">&nbsp; Solution Patterns for Cloud Native Architectures</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Architectures &amp; Patterns</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://www.redhat.com/architect/portfolio/" target="_blank">Portfolio Architecture&nbsp; </a>
+            <a class="navbar-item" href="https://redhat-solution-patterns.github.io/solution-patterns/patterns.html"  target="_blank">Solution Patterns </a>
+            <a class="navbar-item" href="https://validatedpatterns.io/" target="_blank">Validated Patterns&nbsp;</a>
+            <a class="navbar-item" href="https://catalog.redhat.com/solutions" target="_blank">Ecosystem Solutions&nbsp;</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" target="_blank" href="https://developers.redhat.com">Red Hat Developers</a>
+            <a class="navbar-item" target="_blank" href="https://developers.redhat.com/app-dev-platform">App Dev Platform</a>
+            <a class="navbar-item" target="_blank" href="https://www.redhat.com/en/products/application-foundations">Red Hat Application Services</a>
+          </div>
+        </div>
+
+          <a class="navbar-item" target="_blank" href="https://github.com/redhat-solution-patterns/redhat-solution-patterns.github.io/issues">Feedback</a>
+          <a class="navbar-item" target="_blank" href="https://redhat-solution-patterns.github.io/solution-patterns/contributors-guide.html">Contribute</a>
+
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="solution-pattern-template" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Template Tutorial</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">1. Home page</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index.html#use-cases">1.1 Use cases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index.html#_the_story_behind_this_solution_pattern">1.2 The story behind this solution pattern</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index.html#_the_solution">1.3 The solution</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-architecture.html">2. Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tech_stack">2.1. Technology stack</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#in_depth">2.2. An in-depth look at the solution&#8217;s architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#more_tech">2.3. More about the technology stack</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-demo.html">3. See the Solution in Action</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-demo.html#_demonstration">3.1. Demonstration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-demo.html#_run_the_demonstration">3.2. Run this demonstration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-demo.html#_before_getting_started">3.3. Pre-requisites</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-demo.html#_installing_the_demo">3.4. Installing the demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-demo.html#_walkthrough_guide">3.5. Walkthrough guide</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="04-conclusion.html">4. Conclusion</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="developer-resources.html">5. Developer Resources</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text"><a href="https://redhat-solution-patterns.github.io/solution-patterns/patterns.html" target="_blank" rel="noopener">Explore Red Hat Solution Patterns</a></span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Template Tutorial</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Template Tutorial</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Template Tutorial</a></li>
+    <li><a href="02-architecture.html">2. Architecture</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/rafaelvzago/rhsi-instructlab/edit/main/documentation/modules/ROOT/pages/02-architecture.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Solution Pattern: Secure AI Chatbot Deployment Using InstructLab and Skupper</h1>
+<h1 id="_architecture" class="sect0"><a class="anchor" href="#_architecture"></a><a class="link" href="#_architecture">Architecture</a></h1>
+<div class="openblock partintro">
+<div class="content">
+<div class="paragraph">
+<p>This architecture outlines a solution for securely deploying a local AI chatbot using <strong>InstructLab</strong> and <strong>Skupper</strong>, while ensuring data privacy and seamless communication between isolated environments. The model is hosted in a private environment, and the service is exposed through a public OpenShift deployment, allowing external access while safeguarding the underlying data and models.</p>
+</div>
+<div class="paragraph">
+<p>The core elements include:
+- <strong>InstructLab</strong> for hosting, training, and serving the AI model in a secure environment.
+- <strong>Red Hat Service Interconnect (RHSI)</strong> combined with <strong>Skupper</strong> to create a <strong>Virtual Application Network (VAN)</strong> between private and public sites, enabling secure communication.
+- <strong>OpenShift</strong> for exposing the chatbot to external users while maintaining scalability and secure connectivity to the model.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This solution enables secure communication between services hosted in different environments using <strong>Skupper</strong> and <strong>Red Hat Service Interconnect</strong>, ensuring data privacy and secure model serving.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_architecture_diagram"><a class="anchor" href="#_architecture_diagram"></a><a class="link" href="#_architecture_diagram">.1. Architecture Diagram</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="_images/instructlab_skupper.png" alt="Architecture Overview" width="100%">
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_challenges"><a class="anchor" href="#_common_challenges"></a><a class="link" href="#_common_challenges">1. Common Challenges</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Secure Model Hosting</strong>: Protecting sensitive AI models while allowing controlled external access.</p>
+</li>
+<li>
+<p><strong>Hybrid Connectivity</strong>: Facilitating communication between private and public environments without compromising security.</p>
+</li>
+<li>
+<p><strong>Data Privacy</strong>: Ensuring that private data remains in a protected environment while providing real-time AI responses to external users.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tech_stack"><a class="anchor" href="#tech_stack"></a><a class="link" href="#tech_stack">2. Technology Stack</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Red Hat supported products</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a>
+Red Hat OpenShift is a Kubernetes-based container platform that allows developers to build, deploy, and manage containerized applications. It provides a robust platform for scaling and automating applications across hybrid cloud environments, ensuring reliability and security.</p>
+</li>
+<li>
+<p><a href="https://www.redhat.com/en/technologies/cloud-computing/service-interconnect">Red Hat Service Interconnect (RHSI)</a>
+Red Hat Service Interconnect (RHSI) enables secure communication between services across different environments. Using a Virtual Application Network (VAN), it ensures that services in private, public, and hybrid cloud environments can seamlessly interact without exposing sensitive data directly.</p>
+</li>
+<li>
+<p><a href="https://instructlab.ai/">InstructLab</a>
+InstructLab is an AI model platform that simplifies the process of training, serving, and managing large language models. It is designed to be flexible and secure, making it ideal for environments where models need to remain private but still serve external requests through controlled access paths.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="in_depth"><a class="anchor" href="#in_depth"></a><a class="link" href="#in_depth">3. An in-depth look at the solution&#8217;s architecture</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This architecture is based on a hybrid setup where the AI model is trained and served via <strong>InstructLab</strong> in a private environment (Site A) and can only be accessed by external users through a public <strong>OpenShift</strong> site (Site B), using <strong>Skupper</strong> for secure communication. The <strong>Red Hat Service Interconnect (RHSI)</strong> ensures that data exchanged between these two environments remains secure, creating a <strong>Virtual Application Network (VAN)</strong> between the sites.</p>
+</div>
+<div class="paragraph">
+<p><strong>Site A</strong> hosts the AI model using InstructLab and is responsible for:
+- Receiving user input exclusively from Site B (OpenShift).
+- Sending the input to the LLaMA3 model for processing.
+- Returning the model&#8217;s response to Site B securely.</p>
+</div>
+<div class="paragraph">
+<p><strong>Site B</strong> (OpenShift) serves as the only access point for external clients and is responsible for:
+- Exposing the AI chatbot to external users.
+- Sending requests to the private InstructLab model in Site A.
+- Displaying the AI response from the model hosted in Site A.</p>
+</div>
+<div class="paragraph">
+<p>By design, the model running in the private environment (Site A) is isolated and cannot be accessed directly by external clients. All interactions with the model are mediated by <strong>OpenShift</strong> (Site B), ensuring a secure and controlled access path.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/instructlab_architecture.png" alt="Architecture Overview" width="100%">
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="more_tech"><a class="anchor" href="#more_tech"></a><a class="link" href="#more_tech">4. About the Technology Stack</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This solution uses <strong>Red Hat Service Interconnect (RHSI)</strong> and <strong>InstructLab</strong> to secure AI model deployment. <strong>OpenShift</strong> ensures flexible scaling of the chatbot service, while <strong>Skupper</strong> enables seamless and secure communication between the isolated sites, creating a robust hybrid cloud environment for AI-driven applications.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html" class="query-params-link">1. Home page</a></span>
+  <span class="next"><a href="03-demo.html" class="query-params-link">3. See the Solution in Action</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img
+          src="../_/img/app-services-logo.png" height="40px" alt="Cloud Native Architecture Solution Patterns"  href="https://redhat.com" ></a>
+</footer><script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
