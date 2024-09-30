@@ -13,6 +13,21 @@ References:
 * https://developers.redhat.com/blog/2024/06/12/getting-started-instructlab-generative-ai-model-tuning#model_alignment_and_training_with_instructlab[Getting started with InstructLab: Generative AI model tuning]
 * https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab[InstructLab installation guide]
 
+== Concepts and Commands Used in the Demonstration
+
+[NOTE]
+====
+Please make sure to explain what each Skupper command does the first time you use it, especially for people unfamiliar with Skupper. The following commands should be explained:
+
+- **`skupper init`**: Initializes the Skupper network, setting up the necessary components to enable secure communication between services.
+- **`skupper expose`**: Exposes a local service through the Skupper network, allowing it to be accessed from other Skupper-connected sites.
+- **`skupper token`**: Generates a connection token that can be used by other sites to link to the Skupper network, ensuring secure communication.
+- **`skupper link`**: Establishes a secure link between two Skupper sites using the token created by `skupper token`.
+- **`skupper service status`**: Displays the status of services exposed through Skupper, showing what is accessible and how it’s connected within the network.
+
+====
+
+
 == Run the demonstration
 
 === AI Model Deployment with InstructLab
@@ -39,7 +54,7 @@ This installation method will enable your Nvidia GPU to be used by InstructLab. 
 ilab config init
 ----
 
-To enable external access to your model, please create the `config.yaml` file, located into your `instructlab` directory ie. `~/instructlab/config.yaml`, with the following content:
+To enable external access to your model, please modify the `config.yaml` file, located into your `instructlab` directory ie. `~/instructlab/config.yaml`, with the following content:
 
 [source,yaml]
 ----
