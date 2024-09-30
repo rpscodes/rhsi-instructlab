@@ -30,10 +30,15 @@ image::instructlab_skupper.png[Architecture Overview, width=100%]
 [#tech_stack]  
 == Technology Stack  
 
-* **Red Hat supported products**  
+* **Red Hat supported products**
   ** https://www.redhat.com/en/technologies/cloud-computing/openshift[Red Hat OpenShift]  
-  ** https://www.redhat.com/en/technologies/cloud-computing/service-interconnect[Red Hat Service Interconnect (RHSI)]
-  ** https://instructlab.ai/[InstructLab]
+     Red Hat OpenShift is a Kubernetes-based container platform that allows developers to build, deploy, and manage containerized applications. It provides a robust platform for scaling and automating applications across hybrid cloud environments, ensuring reliability and security.
+     
+  ** https://www.redhat.com/en/technologies/cloud-computing/service-interconnect[Red Hat Service Interconnect (RHSI)]  
+     Red Hat Service Interconnect (RHSI) enables secure communication between services across different environments. Using a Virtual Application Network (VAN), it ensures that services in private, public, and hybrid cloud environments can seamlessly interact without exposing sensitive data directly.
+
+  ** https://instructlab.ai/[InstructLab]  
+     InstructLab is an AI model platform that simplifies the process of training, serving, and managing large language models. It is designed to be flexible and secure, making it ideal for environments where models need to remain private but still serve external requests through controlled access paths.
 
 [#in_depth]  
 == An in-depth look at the solution's architecture  
