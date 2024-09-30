@@ -184,15 +184,23 @@ Deploy the public Skupper in Site B. The public Skupper will receive the connect
 
 This is the step where you create the project and deploy the public Skupper. The public Skupper will be responsible for receiving the connection from the private Skupper and creating a secure connection between the two sites. Open a new terminal and run the following commands:
 
+
 [.console-input]
 [source,shell script]
 ----
+SKUPPER_PLATFORM=kubernetes
 oc new-project ollama-pilot
 skupper init --enable-console --enable-flow-collector --console-user admin --console-password admin
 ----
 
+[IMPORTANT]
+====
+* Run this command in a new terminal and keep it open, because the default platform is `kubernetes` and the private terminal is using `podman`.
+====
+
 [NOTE]
 ====
+* `SKUPPER_PLATFORM=kubernetes` is used to set the platform to Kubernetes. This is necessary because the public Skupper will be running on a Kubernetes cluster.
 * `oc new-project ollama-pilot` is used to create a new project called `ollama-pilot`.
 * `skupper init` is used to initialize the Skupper network, setting up the necessary components to enable secure communication between services.
 * The `--enable-console` flag is used to enable the Skupper console, which provides a web interface for managing the Skupper network.
