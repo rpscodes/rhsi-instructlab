@@ -1,0 +1,13 @@
+= Solution Pattern: Secure AI Chatbot Deployment Using InstructLab and Skupper  
+:sectnums:  
+:sectlinks:  
+:doctype: book  
+
+= Conclusion
+
+The **Red Hat Service Interconnect** provides a secure and scalable solution for exposing local AI models while keeping sensitive data protected in private environments. By combining **InstructLab** for model training and serving, and **Red Hat Service Interconnect** for establishing secure communication between isolated environments, organizations can confidently deploy AI-driven applications without compromising on data security. This architecture ensures that AI models are only accessible through a controlled path—via **OpenShift**—while the model itself remains secure within the private infrastructure. This is ideal for industries with stringent data privacy requirements, such as finance, healthcare, and government sectors, where both performance and security are paramount.
+
+To demonstrate the power of this architecture, we walk through a detailed example of deploying an AI chatbot using **InstructLab** and **Red Hat Service Interconnect**. The demonstration highlights key steps, including the configuration of the model with **InstructLab**, establishing secure communication between two sites with **Red Hat Service Interconnect**, and exposing the service in **OpenShift**. Each **Red Hat Service Interconnect** command is explained in detail—such as `skupper init`, `skupper expose`, `skupper token`, and `skupper link`—ensuring a clear understanding of how to build a secure, connected infrastructure. The demo further showcases how users can interact with the AI chatbot while maintaining the privacy and security of the underlying data. For those unfamiliar with Red Hat Service Interconnect, this step-by-step guide simplifies the process, offering a practical, real-world example of the service in action.
+
+By integrating these tools, businesses can leverage the benefits of hybrid cloud environments, ensuring secure communication between public and private services without sacrificing performance or ease of access. This approach not only enhances the security of AI models but also offers a flexible, scalable solution for deploying AI-driven services across cloud-native architectures.
+
