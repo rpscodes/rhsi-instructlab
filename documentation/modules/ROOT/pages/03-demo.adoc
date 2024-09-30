@@ -39,7 +39,7 @@ This installation method will enable your Nvidia GPU to be used by InstructLab. 
 ilab config init
 ----
 
-To enable external access to your model, please modify the `config.yaml` file:
+To enable external access to your model, please create the `config.yaml` file, located into your `instructlab` directory ie. `~/instructlab/config.yaml`, with the following content:
 
 [source,yaml]
 ----
