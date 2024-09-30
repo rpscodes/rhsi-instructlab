@@ -188,7 +188,7 @@ This is the step where you create the project and deploy the public Skupper. The
 [.console-input]
 [source,shell script]
 ----
-SKUPPER_PLATFORM=kubernetes
+export SKUPPER_PLATFORM=kubernetes
 oc new-project ollama-pilot
 skupper init --enable-console --enable-flow-collector --console-user admin --console-password admin
 ----
