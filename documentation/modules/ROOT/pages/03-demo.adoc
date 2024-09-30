@@ -24,6 +24,9 @@ Please make sure to explain what each Skupper command does the first time you us
 - **`skupper token`**: Generates a connection token that can be used by other sites to link to the Skupper network, ensuring secure communication.
 - **`skupper link`**: Establishes a secure link between two Skupper sites using the token created by `skupper token`.
 - **`skupper service status`**: Displays the status of services exposed through Skupper, showing what is accessible and how it’s connected within the network.
+- **`ilab download`**: Downloads the model to be used by the chatbot.
+- **`ilab model serve`**: Starts the server that will be responsible for receiving the user input, sending it to the LLaMA3 model, and sending the response back to the user.
+- **`ilab model chat`**: Starts the chatbot, allowing the user to interact with it.
 
 ====
 
@@ -47,6 +50,11 @@ pip install 'instructlab[cuda]' -C cmake.args="-DLLAMA_CUDA=on" -C cmake.args="-
 ====
 This installation method will enable your Nvidia GPU to be used by InstructLab. If you don't have an Nvidia GPU, please check other options in: https://github.com/instructlab/instructlab/blob/main/README.md#-installing-ilab[InstructLab Installation Guide].
 ====
+
+
+=== Initialize the InstructLab Configuration
+
+After installing InstructLab, you need to initialize the configuration. This is the step where you create the `config.yaml` file, at `~/instructlab/config.yaml`, with the default configuration. To initialize the configuration, run the following command:
 
 [.console-input]
 [source,shell script]
@@ -86,12 +94,23 @@ serve:
   model_path: models/merlinite-7b-lab-Q4_K_M.gguf
 ----
 
-Now, you can download and start your server:
+=== Download the model
+
+Now you need to download the model, this is the step where you download the model to be used by the chatbot. The model is the LLaMA3 model, which is a large language model trained on the Merlinite dataset. The model is responsible for generating the responses to the user input. To download the model, run the following command:
 
 [.console-input]
 [source,shell script]
 ----
 ilab model download
+----
+
+=== Start the server
+
+The last step is to start the server. The server will be responsible for receiving the user input, sending it to the LLaMA3 model, and sending the response back to the user.
+
+[.console-input]
+[source,shell script]
+----
 ilab model serve
 
 # The output should be similar to:
@@ -106,12 +125,22 @@ The second step is to deploy the private Skupper in Site A. The private Skupper 
 
 === Install Skupper
 
+To install skupper on site A, with podman as the platform:
+
 [.console-input]
 [source,shell script]
 ----
 export SKUPPER_PLATFORM=podman
 skupper init --ingress none
 ----
+
+
+[NOTE]
+====
+* `SKUPPER_PLATFORM=podman` is used to set the platform to podman. This is necessary because the private Skupper will be running on a podman container.
+* `skupper init` is used to initialize the Skupper network, setting up the necessary components to enable secure communication between services.
+* The `--ingress none` flag is used to disable the automatic creation of an ingress controller. This is necessary because the public Skupper will be responsible for exposing the service to the internet.
+====
 
 === Exposing the InstructLab Chat Model
 
@@ -122,6 +151,14 @@ To bind the local service running the InstructLab chat model to the Skupper serv
 ----
 skupper expose host host.containers.internal --address instructlab --port 8000
 ----
+
+[NOTE]
+====
+* `skupper expose` is used to expose a local service through the Skupper network, allowing it to be accessed from other Skupper-connected sites.
+* `host.containers.internal` is used to bind the local service to the Skupper service.
+* `--address instructlab` is used to specify the address of the service.
+* `--port 8000` is used to specify the port of the service.
+====
 
 Check the status of the Skupper service:
 
@@ -134,11 +171,18 @@ Services exposed through Skupper:
 ╰─ instructlab:8000 (tcp)
 ----
 
+[NOTE]
+====
+* `skupper service status` is used to display the status of services exposed through Skupper, showing what is accessible and how it’s connected within the network.
+====
+
 == Public Skupper Deployment
 
 Deploy the public Skupper in Site B. The public Skupper will receive the connection from the private Skupper and create a secure connection between the two sites.
 
 === Creating the project and deploying the public Skupper:
+
+This is the step where you create the project and deploy the public Skupper. The public Skupper will be responsible for receiving the connection from the private Skupper and creating a secure connection between the two sites. Open a new terminal and run the following commands:
 
 [.console-input]
 [source,shell script]
@@ -147,7 +191,19 @@ oc new-project ollama-pilot
 skupper init --enable-console --enable-flow-collector --console-user admin --console-password admin
 ----
 
+[NOTE]
+====
+* `oc new-project ollama-pilot` is used to create a new project called `ollama-pilot`.
+* `skupper init` is used to initialize the Skupper network, setting up the necessary components to enable secure communication between services.
+* The `--enable-console` flag is used to enable the Skupper console, which provides a web interface for managing the Skupper network.
+* The `--enable-flow-collector` flag is used to enable the flow collector, which collects and displays information about the traffic flowing through the Skupper network.
+* The `--console-user admin` flag is used to set the username for the Skupper console to `admin`.
+* The `--console-password admin` flag is used to set the password for the Skupper console to `admin`.
+====
+
 === Creating the token to allow the private Skupper to connect to the public Skupper:
+
+This is the step where you create the token to allow the private Skupper to connect to the public Skupper. Open a new terminal and run the following command:
 
 [.console-input]
 [source,shell script]
@@ -155,17 +211,28 @@ skupper init --enable-console --enable-flow-collector --console-user admin --con
 skupper token create token.yaml
 ----
 
+[NOTE]
+====
+* `skupper token create token.yaml` is used to generate a connection token that can be used by other sites to link to the Skupper network, ensuring secure communication.
+* The `token.yaml` file will contain the token to connect the two sites.
+====
+
 Now, you'll have a `token.yaml` file with the token to connect the two sites.
 
 === Secure Communication Between the Two Sites with Skupper
 
-In the terminal where the private Skupper is running, link the two sites:
+Now it's time to establish a secure connection between the two sites using the token created by the public Skupper. At the terminal where the private Skupper is running, run the following command to link the two sites:
 
 [.console-input]
 [source,shell script]
 ----
 skupper link create token.yaml --name instructlab
 ----
+
+[NOTE]
+====
+* `skupper link create token.yaml --name instructlab` is used to establish a secure link between two Skupper sites using the token created by `skupper token`.
+====
 
 Check the status of the Skupper link:
 
@@ -183,6 +250,11 @@ Current links from other sites that are connected:
         There are no connected links
 ----
 
+[NOTE]
+====
+* `skupper link status` is used to display the status of the links created by the Skupper network, showing which sites are connected and how they are connected.
+====
+
 Check the status on the public Skupper terminal:
 
 [.console-input]
@@ -198,6 +270,11 @@ Current links from other sites that are connected:
 
        Incoming link from site b8ad86d5-9680-4fea-9c07-ea7ee394e0bd
 ----
+
+[NOTE]
+====
+* `skupper link status` is used to display the status of the links created by the Skupper network, showing which sites are connected and how they are connected.
+====
 
 === Chatbot with Protected Data
 
@@ -218,28 +295,61 @@ skupper service create instructlab 8000
 oc expose service instructlab
 ----
 
+[NOTE]
+====
+* `skupper service create instructlab 8000` is used to create a service in the public Skupper, allowing it to be accessed from the private Skupper.
+* `oc expose service instructlab` is used to expose the service to the internet, allowing it to be accessed by the Ollama Pilot application.
+====
+
 * Getting the public URL:
+
+This URL will be used to access the chatbot from the Ollama Pilot application.
 
 [.console-input]
 [source,shell script]
 ----
 oc get route instructlab
-
-NAME          HOST/PORT                                                              PATH   SERVICES      PORT       TERMINATION   WILDCARD
-instructlab   instructlab-ollama-pilot.apps.your-cluster-url          instructlab   port8000                 None
+NAME          HOST/PORT                                      PATH          SERVICES                PORT       TERMINATION   WILDCARD
+instructlab   instructlab-ollama-pilot.apps.your-cluster-url instructlab                           port8000   None
 ----
 
-* The last step is to create the Ollama Pilot application. You can repeat the instructions from step 1 for AI model deployment in Site B, except you will not run `ilab model serve` since it’s already running in Site A.
+[NOTE]
+====
+* `oc get route instructlab` is used to get the public URL of the service, which will be used to access the chatbot from the Ollama Pilot application.
+====
 
-=== Finally, to interact with the chatbot:
+== Finally, to interact with the chatbot
+
+Let's interact with the chatbot. Run the following command to start the chatbot:
 
 [.console-input]
 [source,shell script]
 ----
 ilab model chat --endpoint-url http://instructlab-ollama-pilot.apps.your-cluster-url/v1/
 
-╭─────────────────────────────────────────────── system ────────────────────────────────────────────────
-│ Welcome to InstructLab Chat w/ MODELS/MERLINITE-7B-LAB-Q4_K_M.GGUF (type /h for help)
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────
->>>                     [S][default]
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── system ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Welcome to InstructLab Chat w/ MODELS/MERLINITE-7B-LAB-Q4_K_M.GGUF (type /h for help)                                                                                                                                                                                                                                      │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+>>> Hello, who are you?                                                                                                                                                                                                                                                                                           [S][default]
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── models/merlinite-7b-lab-Q4_K_M.gguf ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ I am an AI Language Model from IBM Research, trained to assist with various tasks such as answering questions, translating text, summarizing long documents, and even explaining complex concepts. I am here to help make your life easier!                                                                                │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── elapsed 14.291 seconds ─╯
+>>> What is Red Hat Service Interconnect                                                                                                                                                                                                                                                                          [S][default]
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── models/merlinite-7b-lab-Q4_K_M.gguf ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Red Hat Service Interconnect (RHSI) is a software-defined networking solution that allows organizations to create secure, high-performance networks between their on-premises environments and various cloud resources. It enables seamless communication between different data centers, public clouds (such as Amazon    │
+│ Web Services or Microsoft Azure), and even edge devices (such as IoT gateways or mobile applications). RHSI offers the following key features:                                                                                                                                                                             │
+│                                                                                                                                                                                                                                                                                                                            │
+│ 1. **Security**: RHSI ensures secure communication between different environments by employing advanced encryption algorithms like IPSEC and TLS. It also supports virtual private cloud (VPC) concepts for creating isolated networking environments within public clouds.                                                │
+│ 2. **Performance**: RHSI provides high-bandwidth, low-latency network connections. This makes it suitable for handling large data transfers or real-time applications like video streaming and gaming.                                                                                                                     │
+│ 3. **Flexibility**: RHSI supports a wide range of networking protocols such as IPv4, IPv6, and even overlay networks (such as OpenFlow). This allows organizations to build complex networking topologies that cater to their specific needs.                                                                              │
+│ 4. **Automation**: RHSI offers programmable network interfaces, enabling automated provisioning and management of networking resources. This reduces the administrative overhead and improves operational efficiency.                                                                                                      │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── elapsed 94.969 seconds ─╯
+>>>              
+----
+
+[NOTE]
+====
+* `ilab model chat --endpoint-url http://instructlab-ollama-pilot.apps.your-cluster-url/v1/` is used to start the chatbot, allowing the user to interact with it.
+* The chatbot will respond to the user input by sending it to the LLaMA3 model and returning the response back to the user.
+====
 
