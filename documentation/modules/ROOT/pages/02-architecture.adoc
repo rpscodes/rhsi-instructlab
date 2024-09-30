@@ -38,17 +38,19 @@ image::instructlab_skupper.png[Architecture Overview, width=100%]
 [#in_depth]  
 == An in-depth look at the solution's architecture  
 
-This architecture is based on a hybrid setup where the AI model is trained and served via **InstructLab** in a private environment (Site A) while being exposed to external users through a public **OpenShift** site (Site B) using **Skupper** for secure communication. The **Red Hat Service Interconnect (RHSI)** ensures that data exchanged between these two environments remains secure, creating a **Virtual Application Network (VAN)** between the sites.
+This architecture is based on a hybrid setup where the AI model is trained and served via **InstructLab** in a private environment (Site A) and can only be accessed by external users through a public **OpenShift** site (Site B), using **Skupper** for secure communication. The **Red Hat Service Interconnect (RHSI)** ensures that data exchanged between these two environments remains secure, creating a **Virtual Application Network (VAN)** between the sites.
 
-**Site A** hosts the AI model using InstructLab, which is responsible for:
-- Receiving user input from Site B (OpenShift).
+**Site A** hosts the AI model using InstructLab and is responsible for:
+- Receiving user input exclusively from Site B (OpenShift).
 - Sending the input to the LLaMA3 model for processing.
 - Returning the model's response to Site B securely.
 
-**Site B** (OpenShift) is responsible for:
+**Site B** (OpenShift) serves as the only access point for external clients and is responsible for:
 - Exposing the AI chatbot to external users.
 - Sending requests to the private InstructLab model in Site A.
 - Displaying the AI response from the model hosted in Site A.
+
+By design, the model running in the private environment (Site A) is isolated and cannot be accessed directly by external clients. All interactions with the model are mediated by **OpenShift** (Site B), ensuring a secure and controlled access path.
 
 image::instructlab_architecture.png[Architecture Overview, width=100%]
 
